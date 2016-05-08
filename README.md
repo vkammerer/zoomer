@@ -1,2 +1,2 @@
 # zoomer
-Zoom in and out on rasterized images
+A javascript library to zoom on images
