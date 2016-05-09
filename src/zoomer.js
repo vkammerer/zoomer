@@ -82,7 +82,7 @@ class Zoomer {
 			willChange: 'transform',
 			transition: `opacity ${this.opts.opacityTransitionDuration}ms linear`,
 			left: `${Math.ceil((this.opts.width - elementDimensions.width) / -2)}px`,
-			top: `${(Math.ceil(this.opts.height - elementDimensions.height) / -2)}px`,
+			top: `${Math.ceil((this.opts.height - elementDimensions.height) / -2)}px`,
 			width: `${this.opts.width}px`,
 			height: `${this.opts.height}px`,
 		};
