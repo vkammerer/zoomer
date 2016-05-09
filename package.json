@@ -1,6 +1,6 @@
 {
   "name": "zoomer",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A javascript library to zoom on images",
   "files": [
     "dist",
