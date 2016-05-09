@@ -12,14 +12,13 @@
 			body {
 				margin: 0;
 				padding: 0;
-				height: 100%;
 			}
 			body {
-				overflow: hidden;
 				font-family: arial;
 				text-align: center;
 				background: #EEE;
 			}
+			.container,
 			#zoomerElement,
 			#controls {
 				width: 960px;
@@ -53,20 +52,22 @@
 		</style>
 	</head>
 	<body>
-		<h1>Zoomer.js</h1>
-		<p>A javascript library to zoom on images</p>
-		<div id="zoomerElement">
-			Loading images...
-		</div>
-		<div id="controls">
-			<div>
-				<p>Play with the <code>.setZoom</code> method: <input type="range" id="setZoomControl" class="zoomControl" min="0" value="0" max="40" step="1"></p>
+		<div class="container">
+			<h1>Zoomer.js</h1>
+			<p>A javascript library to zoom on images</p>
+			<div id="zoomerElement">
+				Loading images...
 			</div>
-			<div>
-				<p>Play with the <code>.animateZoom</code> method: <button id="animateZoomControl" class="zoomControl">Animate</button></p>
+			<div id="controls">
+				<div>
+					<p>Play with the <code>.setZoom</code> method: <input type="range" id="setZoomControl" class="zoomControl" min="0" value="0" max="80" step="1"></p>
+				</div>
+				<div>
+					<p>Play with the <code>.animateZoom</code> method: <button id="animateZoomControl" class="zoomControl">Animate</button></p>
+				</div>
 			</div>
+			<p>See the full documentation on the <a href="https://github.com/vkammerer/zoomer">Github repo</a> </p>
 		</div>
-		<p>See the full documentation on the <a href="https://github.com/vkammerer/zoomer">Github repo</a> </p>
 		<script src="./zoomer.js"></script>
 		<script type="text/javascript">
 
@@ -78,13 +79,13 @@
 				step: 0,
 				opacityTransitionDuration: 200,
 				images: [{
-						src: './images/staticmap__4.png',
+						src: './images/map_zoom4_960x540.png',
 						level: 0,
 					}, {
-						src: './images/staticmap___6.png',
+						src: './images/map_zoom6_960x540.png',
 						level: 2,
 					}, {
-						src: './images/staticmap__8.png',
+						src: './images/map_zoom8_960x540.png',
 						level: 4,
 					}]
 			});
@@ -94,13 +95,17 @@
 
 				var setZoomControl = document.querySelector('#setZoomControl');
 				setZoomControl.addEventListener('input', function(ev, or){
-					myZoomer.setZoom({step: setZoomControl.value});
+					myZoomer.setZoom({
+						stepsPerLevel: 20,
+						step: setZoomControl.value
+					});
 				});
 
 				var animateZoomControl = document.querySelector('#animateZoomControl');
 				animateZoomControl.addEventListener('click', function(ev, or){
 					var spl = 20;
 					myZoomer.animateZoom({
+						stepsPerLevel: spl,
 						fromStep: spl * 0,
 						toStep: spl * 4,
 					}).then(function(){
