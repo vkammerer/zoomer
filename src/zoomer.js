@@ -80,9 +80,8 @@ class Zoomer {
 		const imgStyle = {
 			position: 'absolute',
 			willChange: 'transform',
-			transition: `opacity ${this.opts.opacityTransitionDuration}ms linear`,
-			left: `${Math.ceil((this.opts.width - elementDimensions.width) / -2)}px`,
-			top: `${Math.ceil((this.opts.height - elementDimensions.height) / -2)}px`,
+			left: `${Math.floor((this.opts.width - elementDimensions.width) / -2)}px`,
+			top: `${Math.floor((this.opts.height - elementDimensions.height) / -2)}px`,
 			width: `${this.opts.width}px`,
 			height: `${this.opts.height}px`,
 		};
@@ -92,13 +91,20 @@ class Zoomer {
 	}
 
 	setImageScale(image) {
-		const scaleLevel = image.level - this.state.step / this.state.stepsPerLevel;
-		const opacity = (scaleLevel > -2 && scaleLevel < 2) ? 1 : 0.001;
-		const scale = 1 / Math.pow(2, scaleLevel);
-		Object.assign(image.img.style, {
-			opacity,
-			transform: `scale3d(${scale}, ${scale},1)`,
-		});
+		this.scaleLevel = image.level - this.state.step / this.state.stepsPerLevel;
+		this.shouldDisplay = this.scaleLevel >= -2 && this.scaleLevel <= 2;
+		if (this.shouldDisplay) {
+			Object.assign(image.img.style, {
+				opacity: 1,
+				willChange: 'transform',
+				transform: `scale(${1 / Math.pow(2, this.scaleLevel)})`,
+			});
+		} else {
+			Object.assign(image.img.style, {
+				willChange: 'none',
+				opacity: 0.0001,
+			});
+		}
 	}
 
 	setImagesScales() {
