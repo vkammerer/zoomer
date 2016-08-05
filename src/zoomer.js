@@ -53,11 +53,11 @@ class Zoomer {
 	}
 
 	loadImage(image) {
-		const img = new Image();
-		img.src = image.src;
 		const imageSP = new SuperPromise();
+		const img = new Image();
 		img.onload = imageSP.resolve.bind(this, Object.assign(image, { img }));
 		img.onerror = imageSP.reject;
+		img.src = image.src;
 		return imageSP.promise;
 	}
 
