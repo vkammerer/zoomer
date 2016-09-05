@@ -60,7 +60,7 @@
 			</div>
 			<div id="controls">
 				<div>
-					<p>Play with the <code>.setZoom</code> method: <input type="range" id="setZoomControl" class="zoomControl" min="0" value="0" max="80" step="1"></p>
+					<p>Play with the <code>.setZoom</code> method: <input type="range" id="setZoomControl" class="zoomControl" min="0" value="0" max="100" step="1"></p>
 				</div>
 				<div>
 					<p>Play with the <code>.animateZoom</code> method: <button id="animateZoomControl" class="zoomControl">Animate</button></p>
@@ -71,56 +71,66 @@
 		<script src="./zoomer.js"></script>
 		<script type="text/javascript">
 
+			var spl = 10;
+
 			var myZoomer = new Zoomer({
 				selector: '#zoomerElement',
 				width: 960,
 				height: 540,
-				stepsPerLevel: 20,
+				stepsPerLevel: spl,
 				step: 0,
 				images: [{
-						src: './images/map_zoom4_960x540.png',
+						src: './images/montreal_4.png',
 						level: 0,
 					}, {
-						src: './images/map_zoom6_960x540.png',
+						src: './images/montreal_6.png',
 						level: 2,
 					}, {
-						src: './images/map_zoom8_960x540.png',
+						src: './images/montreal_8.png',
 						level: 4,
+					}, {
+						src: './images/montreal_10.png',
+						level: 6,
+					}, {
+						src: './images/montreal_12.png',
+						level: 8,
+					}, {
+						src: './images/montreal_14.png',
+						level: 10,
 					}]
 			});
-			myZoomer.on('ready', function(){
 
+			myZoomer.on('ready', function(){
 				document.querySelector('#controls').style.display = 'block';
 
 				var setZoomControl = document.querySelector('#setZoomControl');
-				setZoomControl.addEventListener('input', function(ev, or){
+				setZoomControl.addEventListener('input', function(){
 					myZoomer.setZoom({
-						stepsPerLevel: 20,
 						step: setZoomControl.value
 					});
 				});
 
-				var animateZoomControl = document.querySelector('#animateZoomControl');
-				animateZoomControl.addEventListener('click', function(ev, or){
-					var spl = 20;
-					myZoomer.animateZoom({
+				var zoomIn = function() {
+					return myZoomer.animateZoom({
 						stepsPerLevel: spl,
 						fromStep: spl * 0,
-						toStep: spl * 4,
-					}).then(function(){
-						setTimeout(function() {
-							var spl = 15;
-							myZoomer.animateZoom({
-								stepsPerLevel: spl,
-								fromStep: spl * 4,
-								toStep: spl * 0,
-							});
-						}, 500);
+						toStep: spl * 10,
+					})
+				}
+
+				var zoomOut = function() {
+					return myZoomer.animateZoom({
+						stepsPerLevel: spl,
+						fromStep: spl * 10,
+						toStep: spl * 0,
 					});
+				}
+
+				var animateZoomControl = document.querySelector('#animateZoomControl');
+				animateZoomControl.addEventListener('click', function(){
+					zoomIn().then(zoomOut);
 				});
-
 			});
-
 		</script>
 	</body>
 </html>

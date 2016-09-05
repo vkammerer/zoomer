@@ -5,6 +5,6 @@
 		"indent": [2, "tab", {"SwitchCase": 1}],
 		"no-console": 0,
 		"no-new-object": 0,
-		"new-cap": 0,
+		"new-cap": 0
 	}
 }
